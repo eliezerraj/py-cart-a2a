@@ -30,6 +30,18 @@ AGENT_CARD = {
             "name": "Price Analysis",
             "description": "Analyzes product pricing and quantity trends from cart item history.",
             "tags": ["pricing", "analytics"],
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "product": {
+                        "type": "object",
+                        "properties": {
+                        "sku": { "type": "string" }
+                        },
+                        "required": ["sku"]
+                    }
+                }
+            },
             "examples": [
                 '{"product": [{"sku": "coffee-12"}]}'
             ],
