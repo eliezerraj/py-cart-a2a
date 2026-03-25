@@ -34,17 +34,19 @@ AGENT_CARD = {
                 "type": "object",
                 "properties": {
                     "product": {
-                        "type": "object",
-                        "properties": {
-                        "sku": { "type": "string" }
-                        },
-                        "required": ["sku"]
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "sku": { "type": "string" }
+                            },
+                            "required": ["sku"]
+                        }
                     }
-                }
+                },
+                "required": ["product"]
             },
-            "examples": [
-                '{"product": [{"sku": "coffee-12"}]}'
-            ],
+            "examples": {"product": [{"sku": "coffee-12"}]},
             "inputModes": ["application/json"],
             "outputModes": ["application/json"],
         }
