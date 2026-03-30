@@ -54,7 +54,7 @@ def cart_price_analysis(registry, product: dict) -> dict:
             res_cart_item_window = send_message(f"{settings.URL_SERVICE_00}/cartItem/list/product?sku={sku}&window={WINDOWSIZE}",
                 method="GET",
                 headers=headers,
-                timeout=10.0)
+                timeout=settings.REQUEST_TIMEOUT)
 
             raw_items = res_cart_item_window.get("data", []) if isinstance(res_cart_item_window.get("data"), dict) else res_cart_item_window
             if isinstance(raw_items, dict):
@@ -96,7 +96,7 @@ def cart_price_analysis(registry, product: dict) -> dict:
                 method="POST",
                 headers=headers,
                 body=envelope.model_dump() if hasattr(envelope, "model_dump") else envelope.dict(),
-                timeout=10.0)
+                timeout=settings.REQUEST_TIMEOUT)
             
             # extract features
             price_n_slope = (
@@ -128,7 +128,7 @@ def cart_price_analysis(registry, product: dict) -> dict:
                 method="POST",
                 headers=headers,
                 body=envelope.model_dump() if hasattr(envelope, "model_dump") else envelope.dict(),
-                timeout=10.0)
+                timeout=settings.REQUEST_TIMEOUT)
             
             quantity_n_slope = (
                 quantities_stats.get("data", {})
@@ -146,11 +146,11 @@ def cart_price_analysis(registry, product: dict) -> dict:
 
             #------------------------------------------------------
 
-            if price_n_slope < -2 and quantity_n_slope > 2:
+            if price_n_slope < -0.8 and quantity_n_slope > 0.8:
                 action = "INCREASING PRICE"
-            elif price_n_slope < -2 and quantity_n_slope < -2:
+            elif price_n_slope < -0.8 and quantity_n_slope < -0.8:
                 action = "STOP SALES 10(MINUTES) - CHECK QUALITY"
-            elif price_n_slope > 2 and quantity_n_slope > 2:
+            elif price_n_slope > 0.8 and quantity_n_slope > 0.8:
                 action = "STOP SALES 10(MINUTES) - RUNOUT RISK"
             else:
                 action = "STEADY PRICE"

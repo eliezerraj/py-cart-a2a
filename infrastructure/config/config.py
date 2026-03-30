@@ -13,7 +13,8 @@ class Settings:
         self.URL_AGENT = os.getenv("URL_AGENT")
         self.PORT = os.getenv("PORT")
         self.SESSION_TIMEOUT = int(os.getenv("SESSION_TIMEOUT")) 
-
+        self.REQUEST_TIMEOUT = int(os.getenv("REQUEST_TIMEOUT"))
+        
         self.WINDOWSIZE = int(os.getenv("WINDOWSIZE", "24"))  # Default to 24 if not set    
         self.URL_SERVICE_00 = os.getenv("URL_SERVICE_00")
         self.URL_SERVICE_01 = os.getenv("URL_SERVICE_01")
